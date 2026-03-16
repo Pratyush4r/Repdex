@@ -9,14 +9,21 @@ import Loader from './Loader';
 const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [exercisesPerPage] = useState(6);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     const fetchExercisesData = async () => {
       try {
+        setIsLoading(true);
+        setLoadError(false);
         let exercisesData = [];
 
         if (bodyPart === 'all') {
-          exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
+          exercisesData = await fetchData(
+            'https://exercisedb.p.rapidapi.com/exercises',
+            exerciseOptions,
+          );
         } else {
           exercisesData = await fetchData(
             `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
@@ -26,7 +33,10 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
         setExercises(Array.isArray(exercisesData) ? exercisesData : []);
       } catch (_error) {
+        setLoadError(true);
         setExercises([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -47,7 +57,28 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     window.scrollTo({ top: 1800, behavior: 'smooth' });
   };
 
-  if (!currentExercises.length) return <Loader />;
+  if (isLoading) return <Loader />;
+
+  if (loadError) {
+    return (
+      <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">
+        <Typography variant="h5" textAlign="center">
+          Could not load exercises right now. Please check your API key and try
+          again.
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (!currentExercises.length) {
+    return (
+      <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">
+        <Typography variant="h5" textAlign="center">
+          No exercises found for this filter.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">

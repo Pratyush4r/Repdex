@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Box, Stack } from '@mui/material';
-import Loader from './Loader';
 
 // const ExerciseVideos = ({ exerciseVideos, name }) => {
 //   // if (!exerciseVideos.length) return <Loader />;
@@ -36,15 +35,53 @@ import Loader from './Loader';
 //   );
 // };
 
-const ExerciseVideos = ({ exerciseVideos, name }) => {
-  if (!exerciseVideos.length) return <Loader />;
+const ExerciseVideos = ({ exerciseVideos, name, videosUnavailable }) => {
+  if (!exerciseVideos.length) {
+    return (
+      <Box sx={{ marginTop: { lg: '203px', xs: '20px' }, p: '20px' }}>
+        <Typography
+          sx={{ fontSize: { lg: '44px', xs: '25px' } }}
+          fontWeight={700}
+          color="#000"
+          mb="16px"
+        >
+          Watch{' '}
+          <span style={{ color: '#FF2625', textTransform: 'capitalize' }}>
+            {name}
+          </span>{' '}
+          exercise videos
+        </Typography>
+        <Typography
+          sx={{ fontSize: { lg: '20px', xs: '16px' } }}
+          color="#4F4C4C"
+        >
+          {videosUnavailable
+            ? 'Video API is unavailable for your key right now.'
+            : 'No videos found for this exercise.'}
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ marginTop: { lg: '203px', xs: '20px' }, p: '20px' }}>
-      <Typography sx={{ fontSize: { lg: '44px', xs: '25px' } }} fontWeight={700} color="#000" mb="33px">
-        Watch <span style={{ color: '#FF2625', textTransform: 'capitalize' }}>{name}</span> exercise videos
+      <Typography
+        sx={{ fontSize: { lg: '44px', xs: '25px' } }}
+        fontWeight={700}
+        color="#000"
+        mb="33px"
+      >
+        Watch{' '}
+        <span style={{ color: '#FF2625', textTransform: 'capitalize' }}>
+          {name}
+        </span>{' '}
+        exercise videos
       </Typography>
-      <Stack direction="row" sx={{ p: 2, position: 'relative', overflowX: 'auto' }} className="horizontal-scroll">
+      <Stack
+        direction="row"
+        sx={{ p: 2, position: 'relative', overflowX: 'auto' }}
+        className="horizontal-scroll"
+      >
         {exerciseVideos.slice(0, 6).map((item, index) => (
           <Box
             key={index}
@@ -72,7 +109,10 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
               style={{ objectFit: 'cover' }}
             />
             <Box sx={{ p: '10px', backgroundColor: '#fff' }}>
-              <Typography sx={{ fontSize: { lg: '18px', xs: '16px' }, fontWeight: 600 }} color="#000">
+              <Typography
+                sx={{ fontSize: { lg: '18px', xs: '16px' }, fontWeight: 600 }}
+                color="#000"
+              >
                 {item.video.title}
               </Typography>
               <Typography fontSize="14px" color="gray">
