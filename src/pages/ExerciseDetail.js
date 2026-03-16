@@ -8,6 +8,17 @@ import ExerciseVideos from '../components/ExerciseVideos';
 import SimilarExercises from '../components/SimilarExercises';
 import Loader from '../components/Loader';
 
+const getUniqueExercises = (items, currentExerciseId) => {
+  const seenExerciseIds = new Set([currentExerciseId]);
+
+  return items.filter((item) => {
+    if (!item?.id || seenExerciseIds.has(item.id)) return false;
+
+    seenExerciseIds.add(item.id);
+    return true;
+  });
+};
+
 const ExerciseDetail = () => {
   const [exerciseDetail, setExerciseDetail] = useState({});
   const [exerciseVideos, setExerciseVideos] = useState([]);
@@ -65,7 +76,10 @@ const ExerciseDetail = () => {
 
         if (targetResult.status === 'fulfilled') {
           setTargetMuscleExercises(
-            Array.isArray(targetResult.value) ? targetResult.value : [],
+            getUniqueExercises(
+              Array.isArray(targetResult.value) ? targetResult.value : [],
+              exerciseDetailData.id,
+            ),
           );
         } else {
           setTargetMuscleExercises([]);
@@ -73,7 +87,10 @@ const ExerciseDetail = () => {
 
         if (equipmentResult.status === 'fulfilled') {
           setEquipmentExercises(
-            Array.isArray(equipmentResult.value) ? equipmentResult.value : [],
+            getUniqueExercises(
+              Array.isArray(equipmentResult.value) ? equipmentResult.value : [],
+              exerciseDetailData.id,
+            ),
           );
         } else {
           setEquipmentExercises([]);

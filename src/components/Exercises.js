@@ -6,13 +6,23 @@ import { exerciseOptions, fetchData } from '../utils/fetchData';
 import ExerciseCard from './ExerciseCard';
 import Loader from './Loader';
 
-const Exercises = ({ exercises, setExercises, bodyPart }) => {
+const Exercises = ({ exercises, setExercises, bodyPart, searchTerm }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [exercisesPerPage] = useState(6);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    setCurrentPage(1);
+  }, [bodyPart, searchTerm, exercises.length]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      setIsLoading(false);
+      setLoadError(false);
+      return;
+    }
+
     const fetchExercisesData = async () => {
       try {
         setIsLoading(true);
