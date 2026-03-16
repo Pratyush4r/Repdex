@@ -5,6 +5,7 @@ import { exerciseOptions, fetchData } from '../utils/fetchData';
 import HorizontalScrollbar from './HorizontalScrollbar';
 
 const SearchExercises = ({
+  allExercises,
   bodyPart,
   setBodyPart,
   setExercises,
@@ -37,27 +38,17 @@ const SearchExercises = ({
 
     if (!trimmedSearch) return;
 
-    try {
-      const exercisesData = await fetchData(
-        'https://exercisedb.p.rapidapi.com/exercises',
-        exerciseOptions,
-      );
-      const safeExercises = Array.isArray(exercisesData) ? exercisesData : [];
-      const searchedExercises = safeExercises.filter(
-        (exercise) => exercise.name.toLowerCase().includes(trimmedSearch)
-          || exercise.bodyPart.toLowerCase().includes(trimmedSearch)
-          || exercise.target.toLowerCase().includes(trimmedSearch)
-          || exercise.equipment.toLowerCase().includes(trimmedSearch),
-      );
+    const searchedExercises = allExercises.filter(
+      (exercise) => exercise.name.toLowerCase().includes(trimmedSearch)
+        || exercise.bodyPart.toLowerCase().includes(trimmedSearch)
+        || exercise.target.toLowerCase().includes(trimmedSearch)
+        || exercise.equipment.toLowerCase().includes(trimmedSearch),
+    );
 
-      setExercises(searchedExercises);
-      setBodyPart('all');
-      setSearchTerm(trimmedSearch);
-      window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
-    } catch (_error) {
-      setExercises([]);
-      setSearchTerm(trimmedSearch);
-    }
+    setExercises(searchedExercises);
+    setBodyPart('all');
+    setSearchTerm(trimmedSearch);
+    window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
   };
 
   const handleBodyPartSelect = (selectedBodyPart) => {

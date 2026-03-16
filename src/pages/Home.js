@@ -6,6 +6,7 @@ import SearchExercises from '../components/SearchExercises';
 import HeroBanner from '../components/HeroBanner';
 
 const Home = () => {
+  const [allExercises, setAllExercises] = useState([]);
   const [exercises, setExercises] = useState([]);
   const [bodyPart, setBodyPart] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +17,7 @@ const Home = () => {
 
       <Box mt="40px" px="20px">
         <SearchExercises
+          allExercises={allExercises}
           setExercises={setExercises}
           bodyPart={bodyPart}
           setBodyPart={setBodyPart}
@@ -25,6 +27,7 @@ const Home = () => {
 
       <Box mt="60px" px="20px">
         <Exercises
+          setAllExercises={setAllExercises}
           setExercises={setExercises}
           exercises={exercises}
           bodyPart={bodyPart}

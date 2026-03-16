@@ -8,13 +8,32 @@ import ExerciseVideos from '../components/ExerciseVideos';
 import SimilarExercises from '../components/SimilarExercises';
 import Loader from '../components/Loader';
 
-const getUniqueExercises = (items, currentExerciseId) => {
-  const seenExerciseIds = new Set([currentExerciseId]);
+const getExerciseSignature = (exercise) => [
+  exercise?.name?.toLowerCase().trim(),
+  exercise?.bodyPart?.toLowerCase().trim(),
+  exercise?.target?.toLowerCase().trim(),
+  exercise?.equipment?.toLowerCase().trim(),
+].join('|');
+
+const getUniqueExercises = (items, currentExercise) => {
+  const seenExerciseIds = new Set([currentExercise?.id]);
+  const seenExerciseSignatures = new Set([
+    getExerciseSignature(currentExercise),
+  ]);
 
   return items.filter((item) => {
-    if (!item?.id || seenExerciseIds.has(item.id)) return false;
+    const itemSignature = getExerciseSignature(item);
+
+    if (
+      !item?.id
+      || seenExerciseIds.has(item.id)
+      || seenExerciseSignatures.has(itemSignature)
+    ) {
+      return false;
+    }
 
     seenExerciseIds.add(item.id);
+    seenExerciseSignatures.add(itemSignature);
     return true;
   });
 };
@@ -78,7 +97,7 @@ const ExerciseDetail = () => {
           setTargetMuscleExercises(
             getUniqueExercises(
               Array.isArray(targetResult.value) ? targetResult.value : [],
-              exerciseDetailData.id,
+              exerciseDetailData,
             ),
           );
         } else {
@@ -89,7 +108,7 @@ const ExerciseDetail = () => {
           setEquipmentExercises(
             getUniqueExercises(
               Array.isArray(equipmentResult.value) ? equipmentResult.value : [],
-              exerciseDetailData.id,
+              exerciseDetailData,
             ),
           );
         } else {
