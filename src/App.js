@@ -22,7 +22,14 @@ const App = () => {
   }, [isDarkMode]);
 
   return (
-    <Box width="400px" sx={{ width: { xl: '1488px' } }} m="auto">
+    <Box
+      sx={{
+        maxWidth: '1488px',
+        width: '100%',
+        mx: 'auto',
+        px: { xs: 2, sm: 3 },
+      }}
+    >
       <Navbar
         isDarkMode={isDarkMode}
         onToggleTheme={() => setIsDarkMode((prev) => !prev)}

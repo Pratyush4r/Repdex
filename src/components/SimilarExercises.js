@@ -14,11 +14,8 @@ const SimilarExercises = ({ targetMuscleExercises, equipmentExercises }) => (
       fontWeight={700}
       mb="33px"
     >
-      Similar{' '}
-      <span style={{ color: 'var(--accent)', textTransform: 'capitalize' }}>
-        Target Muscle
-      </span>{' '}
-      exercises
+      More exercises for the{' '}
+      <span style={{ color: 'var(--accent)' }}>same muscle group</span>
     </Typography>
     <Stack direction="row" sx={{ p: 2, position: 'relative' }}>
       {targetMuscleExercises.length !== 0 ? (
@@ -44,11 +41,8 @@ const SimilarExercises = ({ targetMuscleExercises, equipmentExercises }) => (
       fontWeight={700}
       mb="33px"
     >
-      Similar{' '}
-      <span style={{ color: 'var(--accent)', textTransform: 'capitalize' }}>
-        Equipment
-      </span>{' '}
-      exercises
+      More exercises using the{' '}
+      <span style={{ color: 'var(--accent)' }}>same equipment</span>
     </Typography>
     <Stack direction="row" sx={{ p: 2, position: 'relative' }}>
       {equipmentExercises.length !== 0 ? (

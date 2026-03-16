@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
-
-import Logo from '../assets/images/Logo.png';
 
 const Navbar = ({ isDarkMode, onToggleTheme }) => {
   const location = useLocation();
@@ -13,33 +11,35 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
   return (
     <Stack
       direction="row"
-      justifyContent="space-around"
+      justifyContent="space-between"
       sx={{
-        gap: { sm: '123px', xs: '40px' },
+        gap: { sm: '24px', xs: '12px' },
         mt: { sm: '32px', xs: '20px' },
-        justifyContent: 'none',
         alignItems: 'center',
         background: 'var(--surface-color)',
         border: '1px solid var(--border-color)',
         borderRadius: '16px',
-        py: '10px',
+        py: '12px',
+        px: { xs: '14px', sm: '22px' },
       }}
-      px="20px"
     >
-      <Link to="/">
-        <img
-          src={Logo}
-          alt="logo"
-          style={{ width: '48px', height: '48px', margin: '0px 20px' }}
-        />
-      </Link>
       <Stack
         direction="row"
-        gap="40px"
-        fontFamily="'Nunito', sans-serif"
-        fontSize={{ lg: '26px', xs: '20px' }}
+        gap={{ lg: '34px', xs: '20px' }}
         alignItems="center"
+        flexWrap="wrap"
       >
+        <Link style={{ textDecoration: 'none' }} to="/">
+          <Typography
+            sx={{
+              color: 'var(--accent)',
+              fontWeight: 800,
+              fontSize: { lg: '30px', xs: '24px' },
+            }}
+          >
+            MoveWell
+          </Typography>
+        </Link>
         <Link
           to="/"
           style={{
@@ -47,6 +47,8 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
             color: 'var(--text-primary)',
             borderBottom:
               currentPath === '/' ? '3px solid var(--accent)' : 'none',
+            fontWeight: 700,
+            fontSize: '20px',
           }}
         >
           Home
@@ -58,6 +60,8 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
             color: 'var(--text-primary)',
             borderBottom:
               currentPath === '/bmi' ? '3px solid var(--accent)' : 'none',
+            fontWeight: 700,
+            fontSize: '20px',
           }}
         >
           BMI Calculator
