@@ -1,3 +1,4 @@
+/** Module: Footer.tsx */
 import React from 'react';
 import { Box, IconButton, Stack, Typography } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -7,8 +8,13 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 const Footer = () => (
   <Box
     mt="80px"
-    bgcolor="var(--muted-surface)"
-    borderTop="1px solid var(--border-color)"
+    width="100%"
+    bgcolor="var(--surface-color)"
+    border="1px solid var(--border-color)"
+    borderRadius="0"
+    borderLeft="none"
+    borderRight="none"
+    boxShadow="var(--shadow-soft)"
   >
     <Stack
       gap="24px"
@@ -24,7 +30,8 @@ const Footer = () => (
           fontWeight: 700,
         }}
       >
-        Stay consistent. Small sessions build big strength.
+        Repdex helps you find exercises, run timers, and track your BMI
+        baseline.
       </Typography>
       <Stack direction="row" spacing={1}>
         <IconButton
@@ -33,7 +40,10 @@ const Footer = () => (
           href="https://x.com/Pratyush4r"
           target="_blank"
           rel="noreferrer"
-          sx={{ color: 'var(--text-primary)' }}
+          sx={{
+            color: 'var(--text-primary)',
+            '&:hover': { color: 'var(--accent)' },
+          }}
         >
           <TwitterIcon />
         </IconButton>
@@ -43,7 +53,10 @@ const Footer = () => (
           href="https://github.com/Pratyush4r"
           target="_blank"
           rel="noreferrer"
-          sx={{ color: 'var(--text-primary)' }}
+          sx={{
+            color: 'var(--text-primary)',
+            '&:hover': { color: 'var(--accent)' },
+          }}
         >
           <GitHubIcon />
         </IconButton>
@@ -53,7 +66,10 @@ const Footer = () => (
           href="https://www.linkedin.com/in/Pratyush4r/"
           target="_blank"
           rel="noreferrer"
-          sx={{ color: 'var(--text-primary)' }}
+          sx={{
+            color: 'var(--text-primary)',
+            '&:hover': { color: 'var(--accent)' },
+          }}
         >
           <LinkedInIcon />
         </IconButton>

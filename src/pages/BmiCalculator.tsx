@@ -1,11 +1,12 @@
+/** Module: BmiCalculator.tsx */
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container } from '@mui/material';
 
 const BmiCalculator = () => {
-  const [unit, setUnit] = useState('metric'); // 'metric' or 'imperial'
+  const [unit, setUnit] = useState<'metric' | 'imperial'>('metric');
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
-  const [bmi, setBmi] = useState(null);
+  const [bmi, setBmi] = useState<string | null>(null);
   const [status, setStatus] = useState('');
 
   const toggleUnit = () => {
@@ -19,13 +20,18 @@ const BmiCalculator = () => {
   const calculateBMI = () => {
     if (!weight || !height) return;
 
-    let bmiValue;
+    const numericWeight = Number(weight);
+    const numericHeight = Number(height);
+
+    if (!numericWeight || !numericHeight) return;
+
+    let bmiValue: number;
 
     if (unit === 'metric') {
-      const heightInMeters = height / 100;
-      bmiValue = weight / (heightInMeters * heightInMeters);
+      const heightInMeters = numericHeight / 100;
+      bmiValue = numericWeight / (heightInMeters * heightInMeters);
     } else {
-      bmiValue = (703 * weight) / (height * height); // height in inches, weight in lbs
+      bmiValue = (703 * numericWeight) / (numericHeight * numericHeight);
     }
 
     setBmi(bmiValue.toFixed(1));
@@ -50,9 +56,10 @@ const BmiCalculator = () => {
         mt: { xs: 6, md: 10 },
         mb: 10,
         py: 4,
-        borderRadius: '16px',
+        borderRadius: '22px',
         background: 'var(--surface-color)',
         border: '1px solid var(--border-color)',
+        boxShadow: 'var(--shadow-soft)',
       }}
     >
       <Typography
@@ -134,7 +141,7 @@ const BmiCalculator = () => {
             fullWidth
             sx={{
               backgroundColor: 'var(--accent)',
-              color: '#fff',
+              color: 'var(--accent-text)',
               fontWeight: 'bold',
               fontSize: { xs: '18px', md: '20px' },
               py: '12px',

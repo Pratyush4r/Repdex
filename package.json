@@ -1,13 +1,13 @@
 {
-  "name": "fitness_app",
+  "name": "repdex",
   "version": "0.1.0",
   "private": true,
+  "description": "Repdex exercise catalog with timers, BMI calculator, and accessibility controls.",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.1",
     "@mui/material": "^5.6.1",
-    "caniuse-lite": "^1.0.30001696",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-horizontal-scrolling-menu": "^2.7.1",
@@ -19,7 +19,17 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:watch": "react-scripts test",
+    "test:ci": "react-scripts test --watchAll=false --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+    "check": "npm run lint && npm run typecheck && npm run test:ci && npm run build",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
   },
   "eslintConfig": {
     "extends": [
@@ -40,11 +50,18 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^18.19.130",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.13.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0"
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "typescript": "^4.9.5"
   }
 }

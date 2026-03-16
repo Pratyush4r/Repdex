@@ -1,3 +1,4 @@
+/** Module: ExerciseDetail.tsx */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
@@ -7,15 +8,23 @@ import Detail from '../components/Detail';
 import ExerciseVideos from '../components/ExerciseVideos';
 import SimilarExercises from '../components/SimilarExercises';
 import Loader from '../components/Loader';
+import type {
+  ExerciseRecord,
+  YoutubeSearchResponse,
+  YoutubeVideoItem,
+} from '../types';
 
-const getExerciseSignature = (exercise) => [
+const getExerciseSignature = (exercise?: Partial<ExerciseRecord> | null) => [
   exercise?.name?.toLowerCase().trim(),
   exercise?.bodyPart?.toLowerCase().trim(),
   exercise?.target?.toLowerCase().trim(),
   exercise?.equipment?.toLowerCase().trim(),
 ].join('|');
 
-const getUniqueExercises = (items, currentExercise) => {
+const getUniqueExercises = (
+  items: ExerciseRecord[],
+  currentExercise?: Partial<ExerciseRecord> | null,
+) => {
   const seenExerciseIds = new Set([currentExercise?.id]);
   const seenExerciseSignatures = new Set([
     getExerciseSignature(currentExercise),
@@ -39,10 +48,16 @@ const getUniqueExercises = (items, currentExercise) => {
 };
 
 const ExerciseDetail = () => {
-  const [exerciseDetail, setExerciseDetail] = useState({});
-  const [exerciseVideos, setExerciseVideos] = useState([]);
-  const [targetMuscleExercises, setTargetMuscleExercises] = useState([]);
-  const [equipmentExercises, setEquipmentExercises] = useState([]);
+  const [exerciseDetail, setExerciseDetail] = useState<Partial<ExerciseRecord>>(
+    {},
+  );
+  const [exerciseVideos, setExerciseVideos] = useState<YoutubeVideoItem[]>([]);
+  const [targetMuscleExercises, setTargetMuscleExercises] = useState<
+    ExerciseRecord[]
+  >([]);
+  const [equipmentExercises, setEquipmentExercises] = useState<
+    ExerciseRecord[]
+  >([]);
   const [videosUnavailable, setVideosUnavailable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -59,7 +74,7 @@ const ExerciseDetail = () => {
         const exerciseDbUrl = 'https://exercisedb.p.rapidapi.com';
         const youtubeSearchUrl = 'https://youtube-search-and-download.p.rapidapi.com';
 
-        const exerciseDetailData = await fetchData(
+        const exerciseDetailData = await fetchData<ExerciseRecord>(
           `${exerciseDbUrl}/exercises/exercise/${id}`,
           exerciseOptions,
         );
@@ -82,9 +97,10 @@ const ExerciseDetail = () => {
         ]);
 
         if (videosResult.status === 'fulfilled') {
+          const videosPayload = videosResult.value as YoutubeSearchResponse;
           setExerciseVideos(
-            Array.isArray(videosResult.value?.contents)
-              ? videosResult.value.contents
+            Array.isArray(videosPayload?.contents)
+              ? videosPayload.contents
               : [],
           );
           setVideosUnavailable(false);
@@ -94,9 +110,10 @@ const ExerciseDetail = () => {
         }
 
         if (targetResult.status === 'fulfilled') {
+          const targetPayload = targetResult.value as ExerciseRecord[];
           setTargetMuscleExercises(
             getUniqueExercises(
-              Array.isArray(targetResult.value) ? targetResult.value : [],
+              Array.isArray(targetPayload) ? targetPayload : [],
               exerciseDetailData,
             ),
           );
@@ -105,9 +122,10 @@ const ExerciseDetail = () => {
         }
 
         if (equipmentResult.status === 'fulfilled') {
+          const equipmentPayload = equipmentResult.value as ExerciseRecord[];
           setEquipmentExercises(
             getUniqueExercises(
-              Array.isArray(equipmentResult.value) ? equipmentResult.value : [],
+              Array.isArray(equipmentPayload) ? equipmentPayload : [],
               exerciseDetailData,
             ),
           );

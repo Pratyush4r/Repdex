@@ -1,9 +1,19 @@
+/** Module: SimilarExercises.tsx */
 import React from 'react';
 import { Typography, Box, Stack } from '@mui/material';
 
 import HorizontalScrollbar from './HorizontalScrollbar';
+import type { ExerciseRecord } from '../types';
 
-const SimilarExercises = ({ targetMuscleExercises, equipmentExercises }) => (
+type SimilarExercisesProps = {
+  targetMuscleExercises: ExerciseRecord[];
+  equipmentExercises: ExerciseRecord[];
+};
+
+const SimilarExercises = ({
+  targetMuscleExercises,
+  equipmentExercises,
+}: SimilarExercisesProps) => (
   <Box sx={{ mt: { lg: '100px', xs: '0px' } }}>
     <Typography
       sx={{

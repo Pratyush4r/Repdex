@@ -1,3 +1,4 @@
+/** Module: HeroBanner.tsx */
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 
@@ -10,8 +11,8 @@ const HeroBanner = () => (
       borderRadius: '20px',
       border: '1px solid var(--border-color)',
       background:
-        'linear-gradient(140deg, var(--surface-color) 65%, var(--muted-surface))',
-      boxShadow: '0 12px 32px rgba(0, 0, 0, 0.06)',
+        'linear-gradient(140deg, var(--surface-color) 58%, var(--muted-surface))',
+      boxShadow: 'var(--shadow-soft)',
       position: 'relative',
       overflow: 'hidden',
     }}
@@ -20,12 +21,12 @@ const HeroBanner = () => (
       variant="h5"
       sx={{
         fontWeight: 600,
-        color: 'var(--accent)',
+        color: 'var(--accent-gold)',
         mb: 1,
         fontSize: { xs: '22px', sm: '26px' },
       }}
     >
-      Health & Fitness App
+      Repdex
     </Typography>
 
     <Typography
@@ -38,8 +39,8 @@ const HeroBanner = () => (
         mb: 2,
       }}
     >
-      Sweat, Smile, <br />
-      and Repeat.
+      Exercise Catalog, <br />
+      BMI, and Timers.
     </Typography>
 
     <Typography
@@ -52,21 +53,21 @@ const HeroBanner = () => (
         mb: 4,
       }}
     >
-      Unlock your potential with effective workouts tailored to your fitness
-      goals.
+      Browse by body part, target muscle, and equipment. Use quick timers while
+      training and check BMI anytime.
     </Typography>
 
     <Button
       href="#exercises"
       sx={{
         backgroundColor: 'var(--accent)',
-        color: '#fff',
+        color: 'var(--accent-text)',
         fontSize: { xs: '20px', sm: '22px' },
         fontWeight: 700,
         px: '30px',
         py: '12px',
         borderRadius: '12px',
-        boxShadow: '0 8px 20px rgba(255, 38, 37, 0.3)',
+        boxShadow: '0 8px 20px rgba(69, 57, 33, 0.32)',
         textTransform: 'none',
         '&:hover': {
           backgroundColor: 'var(--accent-strong)',
@@ -79,18 +80,18 @@ const HeroBanner = () => (
     {/* Decorative Background Text */}
     <Typography
       fontWeight={700}
-      color="var(--accent)"
+      color="var(--accent-gold)"
       sx={{
         position: 'absolute',
         top: '-20px',
         right: '20px',
         fontSize: '180px',
-        opacity: 0.07,
+        opacity: 0.06,
         userSelect: 'none',
         display: { xs: 'none', lg: 'block' },
       }}
     >
-      EXERCISE
+      REPDEX
     </Typography>
   </Box>
 );

@@ -1,18 +1,31 @@
+/** Module: SearchExercises.tsx */
 import React, { useEffect, useState } from 'react';
+import type { Dispatch, KeyboardEvent, SetStateAction } from 'react';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 import HorizontalScrollbar from './HorizontalScrollbar';
+import type { ExerciseRecord } from '../types';
 
-const normalizeSearchValue = (value) => value
+const normalizeSearchValue = (value: string) => value
   .toLowerCase()
   .replace(/[^a-z0-9\s]/g, ' ')
   .replace(/\s+/g, ' ')
   .trim();
 
-const getSearchableExerciseText = (exercise) => normalizeSearchValue(
+const getSearchableExerciseText = (exercise: ExerciseRecord) => normalizeSearchValue(
   `${exercise.name} ${exercise.bodyPart} ${exercise.target} ${exercise.equipment}`,
 );
+
+type SearchExercisesProps = {
+  allExercises: ExerciseRecord[];
+  bodyPart: string;
+  setBodyPart: Dispatch<SetStateAction<string>>;
+  setExercises: Dispatch<SetStateAction<ExerciseRecord[]>>;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
+};
 
 const SearchExercises = ({
   allExercises,
@@ -20,14 +33,14 @@ const SearchExercises = ({
   setBodyPart,
   setExercises,
   setSearchTerm,
-}) => {
+}: SearchExercisesProps) => {
   const [search, setSearch] = useState('');
-  const [bodyParts, setBodyParts] = useState([]);
+  const [bodyParts, setBodyParts] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchExercisesData = async () => {
       try {
-        const bodyPartsData = await fetchData(
+        const bodyPartsData = await fetchData<string[]>(
           'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
           exerciseOptions,
         );
@@ -48,11 +61,11 @@ const SearchExercises = ({
 
     if (!trimmedSearch) return;
 
-    let sourceExercises = allExercises;
+    let sourceExercises: ExerciseRecord[] = allExercises;
 
     if (!sourceExercises.length) {
       try {
-        const exercisesData = await fetchData(
+        const exercisesData = await fetchData<ExerciseRecord[]>(
           'https://exercisedb.p.rapidapi.com/exercises?limit=1500',
           exerciseOptions,
         );
@@ -87,24 +100,31 @@ const SearchExercises = ({
     window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
   };
 
-  const handleBodyPartSelect = (selectedBodyPart) => {
+  const handleBodyPartSelect = (selectedBodyPart: string) => {
     setSearch('');
     setSearchTerm('');
     setBodyPart(selectedBodyPart);
   };
 
   return (
-    <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
+    <Stack
+      id="search-panel"
+      alignItems="center"
+      mt="37px"
+      justifyContent="center"
+      p="20px"
+      sx={{ scrollMarginTop: { xs: '110px', sm: '126px' } }}
+    >
       <Typography
         fontWeight={700}
         sx={{
-          fontSize: { lg: '50px', xs: '36px' },
+          fontSize: { lg: '44px', xs: '34px' },
           color: 'var(--text-primary)',
         }}
-        mb="49px"
+        mb="22px"
         textAlign="center"
       >
-        Find the Right Exercise Fast
+        Find Exercises Fast
       </Typography>
       <Typography
         sx={{
@@ -114,12 +134,21 @@ const SearchExercises = ({
           textAlign: 'center',
         }}
       >
-        Search by name, body part, target muscle, or equipment.
+        Search by name, body area, target muscle, or equipment.
       </Typography>
       <Stack
         direction={{ lg: 'row', xs: 'column' }}
         spacing={2}
-        sx={{ width: '100%', maxWidth: '980px', mb: '72px' }}
+        sx={{
+          width: '100%',
+          maxWidth: '980px',
+          mb: '72px',
+          p: { xs: '14px', sm: '16px' },
+          borderRadius: '16px',
+          background: 'var(--surface-color)',
+          border: '1px solid var(--border-color)',
+          boxShadow: 'var(--shadow-soft)',
+        }}
       >
         <TextField
           value={search}
@@ -127,7 +156,7 @@ const SearchExercises = ({
           placeholder="Type an exercise name, body part, target muscle, or equipment"
           variant="outlined"
           fullWidth
-          onKeyDown={(event) => {
+          onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter') handleSearch();
           }}
           sx={{
@@ -144,14 +173,18 @@ const SearchExercises = ({
                 borderColor: 'var(--border-color)',
                 borderWidth: '2px',
               },
+              '&:hover fieldset': {
+                borderColor: 'var(--accent)',
+              },
             },
           }}
         />
         <Button
           className="search-btn"
+          startIcon={<SearchRoundedIcon />}
           sx={{
             bgcolor: 'var(--accent)',
-            color: '#fff',
+            color: 'var(--accent-text)',
             width: { lg: '200px', xs: '100%' },
             fontSize: { lg: '22px', xs: '18px' },
             fontWeight: 800,
@@ -166,6 +199,7 @@ const SearchExercises = ({
           Search
         </Button>
         <Button
+          startIcon={<RestartAltRoundedIcon />}
           sx={{
             bgcolor: 'var(--muted-surface)',
             color: 'var(--text-primary)',
@@ -176,6 +210,7 @@ const SearchExercises = ({
             height: '60px',
             '&:hover': {
               bgcolor: 'var(--surface-color)',
+              borderColor: 'var(--accent-gold)',
             },
           }}
           onClick={handleClear}

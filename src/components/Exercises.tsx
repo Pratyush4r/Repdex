@@ -1,10 +1,21 @@
+/** Module: Exercises.tsx */
 import React, { useEffect, useState } from 'react';
 import Pagination from '@mui/material/Pagination';
 import { Box, Stack, Typography } from '@mui/material';
+import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 import ExerciseCard from './ExerciseCard';
 import Loader from './Loader';
+import type { ExerciseRecord } from '../types';
+
+type ExercisesProps = {
+  exercises: ExerciseRecord[];
+  setAllExercises: Dispatch<SetStateAction<ExerciseRecord[]>>;
+  setExercises: Dispatch<SetStateAction<ExerciseRecord[]>>;
+  bodyPart: string;
+  searchTerm: string;
+};
 
 const Exercises = ({
   exercises,
@@ -12,7 +23,7 @@ const Exercises = ({
   setExercises,
   bodyPart,
   searchTerm,
-}) => {
+}: ExercisesProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [exercisesPerPage] = useState(6);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,22 +44,28 @@ const Exercises = ({
       try {
         setIsLoading(true);
         setLoadError(false);
-        let exercisesData = [];
+        let exercisesData: ExerciseRecord[] = [];
 
         if (bodyPart === 'all') {
-          exercisesData = await fetchData(
+          const allExercisesData = await fetchData<ExerciseRecord[]>(
             'https://exercisedb.p.rapidapi.com/exercises?limit=1500',
             exerciseOptions,
           );
-          setAllExercises(Array.isArray(exercisesData) ? exercisesData : []);
+          exercisesData = Array.isArray(allExercisesData)
+            ? allExercisesData
+            : [];
+          setAllExercises(exercisesData);
         } else {
-          exercisesData = await fetchData(
+          const filteredExercisesData = await fetchData<ExerciseRecord[]>(
             `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
             exerciseOptions,
           );
+          exercisesData = Array.isArray(filteredExercisesData)
+            ? filteredExercisesData
+            : [];
         }
 
-        setExercises(Array.isArray(exercisesData) ? exercisesData : []);
+        setExercises(exercisesData);
       } catch (_error) {
         setLoadError(true);
         setExercises([]);
@@ -68,7 +85,7 @@ const Exercises = ({
     indexOfLastExercise,
   );
 
-  const paginate = (event, value) => {
+  const paginate = (_event: ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
 
     window.scrollTo({ top: 1800, behavior: 'smooth' });
@@ -103,16 +120,16 @@ const Exercises = ({
         variant="h4"
         fontWeight="bold"
         sx={{
-          fontSize: { lg: '48px', xs: '34px' },
+          fontSize: { lg: '44px', xs: '32px' },
           color: 'var(--text-primary)',
         }}
-        mb="46px"
+        mb="34px"
       >
-        Showing Results
+        Your Exercise Matches
       </Typography>
       <Stack
         direction="row"
-        sx={{ gap: { lg: '107px', xs: '50px' } }}
+        sx={{ gap: { lg: '42px', xs: '28px' } }}
         flexWrap="wrap"
         justifyContent="center"
       >
@@ -130,6 +147,16 @@ const Exercises = ({
             page={currentPage}
             onChange={paginate}
             size="large"
+            sx={{
+              '& .MuiPaginationItem-root': {
+                color: 'var(--text-primary)',
+                borderColor: 'var(--border-color)',
+              },
+              '& .Mui-selected': {
+                backgroundColor: 'var(--accent) !important',
+                color: 'var(--accent-text)',
+              },
+            }}
           />
         )}
       </Stack>

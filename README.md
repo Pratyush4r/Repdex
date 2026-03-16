@@ -1,33 +1,80 @@
-## web-prjct
+# Repdex
 
-React app for exercise browsing and BMI calculation.
+Repdex is a TypeScript React portfolio project for exploring exercises, running training timers, and calculating BMI.
 
-## Prerequisites
+## What It Does
 
-- Node.js 18+
-- npm 9+
-- RapidAPI key with access to:
-  - `exercisedb.p.rapidapi.com`
-  - `youtube-search-and-download.p.rapidapi.com`
+- Search exercises by name, body part, target muscle, or equipment.
+- View exercise details with related videos and similar movements.
+- Save favorite exercises locally.
+- Use timer modes: countdown, HIIT, and stopwatch.
+- Use accessibility controls: theme, text size, UI scale, reduced motion, readable font, contrast.
 
-## Setup
+## Tech Stack
 
-1. Copy env template:
-   - `cp .env.example .env`
-2. Fill keys in `.env`.
-3. Install dependencies:
-   - `npm install`
-4. Run development server:
-   - `npm start`
-5. Open:
-   - `http://localhost:3000`
+- React 18 + TypeScript
+- Material UI (MUI)
+- React Router v6
+- RapidAPI (ExerciseDB, YouTube Search)
+- ESLint + GitHub Actions CI
+
+## Run Locally
+
+```bash
+cd projects/repdex
+cp .env.example .env
+npm install
+npm start
+```
+
+Open `http://localhost:3000`.
 
 ## Environment Variables
 
-- `REACT_APP_RAPID_API_KEY` - API key used for ExerciseDB requests.
-- `REACT_APP_YOUTUBE_RAPID_API_KEY` - Optional separate key for YouTube API requests.  
-  If not set, the app falls back to `REACT_APP_RAPID_API_KEY`.
+Set these in `.env`:
 
-## Build
+- `REACT_APP_RAPID_API_KEY` (required)
+- `REACT_APP_YOUTUBE_RAPID_API_KEY` (optional, falls back to rapid key)
 
-- `npm run build`
+## Scripts
+
+- `npm start` - start dev server
+- `npm run build` - production build
+- `npm run test` - test watcher
+- `npm run test:ci` - single test run (CI mode)
+- `npm run lint` - lint source files
+- `npm run lint:fix` - auto-fix lint issues
+- `npm run typecheck` - TypeScript check
+- `npm run check` - lint + typecheck + tests + build
+
+## Project Structure
+
+- `src/pages` route-level pages
+- `src/components` reusable UI blocks
+- `src/context` app-wide state (favorites, accessibility)
+- `src/utils` API helpers and shared utilities
+- `src/types` shared domain types
+- `docs/ARCHITECTURE.md` maintainability and extension notes
+- `docs/SECURITY.md` OWASP-aligned frontend baseline
+
+## Engineering Notes
+
+- Design follows a simple compositional pattern: pages orchestrate, components render, contexts manage cross-cutting state.
+- API handling is centralized in `src/utils/fetchData.ts` for consistent error handling and key checks.
+- CI runs quality and dependency audit workflows in `.github/workflows/ci.yml`.
+
+## Deployment
+
+Target platform: Netlify.
+
+Build command:
+
+```bash
+npm run build
+```
+
+Publish directory:
+
+```text
+build
+```
