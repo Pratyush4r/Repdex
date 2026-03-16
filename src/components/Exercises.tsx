@@ -75,7 +75,7 @@ const Exercises = ({
     };
 
     fetchExercisesData();
-  }, [bodyPart]);
+  }, [bodyPart, searchTerm, setAllExercises, setExercises]);
 
   // Pagination
   const indexOfLastExercise = currentPage * exercisesPerPage;
