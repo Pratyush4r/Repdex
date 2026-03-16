@@ -34,7 +34,7 @@ Open `http://localhost:3000`.
 Set these in `.env`:
 
 - `REACT_APP_RAPID_API_KEY` (required)
-- `REACT_APP_YOUTUBE_RAPID_API_KEY` (optional, falls back to rapid key)
+- `REACT_APP_YOUTUBE_RAPID_API_KEY` (optional, requires separate RapidAPI subscription for YouTube endpoint)
 
 ## Scripts
 

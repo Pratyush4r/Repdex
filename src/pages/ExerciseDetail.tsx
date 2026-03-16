@@ -3,7 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 
-import { exerciseOptions, fetchData, youtubeOptions } from '../utils/fetchData';
+import {
+  exerciseOptions,
+  fetchData,
+  hasYoutubeApiKey,
+  youtubeOptions,
+} from '../utils/fetchData';
 import Detail from '../components/Detail';
 import ExerciseVideos from '../components/ExerciseVideos';
 import SimilarExercises from '../components/SimilarExercises';
@@ -82,10 +87,12 @@ const ExerciseDetail = () => {
         setExerciseDetail(exerciseDetailData);
 
         const [videosResult, targetResult, equipmentResult] = await Promise.allSettled([
-          fetchData(
-            `${youtubeSearchUrl}/search?query=${encodeURIComponent(exerciseDetailData.name)} exercise`,
-            youtubeOptions,
-          ),
+          hasYoutubeApiKey
+            ? fetchData(
+              `${youtubeSearchUrl}/search?query=${encodeURIComponent(exerciseDetailData.name)} exercise`,
+              youtubeOptions,
+            )
+            : Promise.resolve({ contents: [] }),
           fetchData(
             `${exerciseDbUrl}/exercises/target/${exerciseDetailData.target}`,
             exerciseOptions,
@@ -103,7 +110,7 @@ const ExerciseDetail = () => {
               ? videosPayload.contents
               : [],
           );
-          setVideosUnavailable(false);
+          setVideosUnavailable(!hasYoutubeApiKey);
         } else {
           setExerciseVideos([]);
           setVideosUnavailable(true);

@@ -38,7 +38,7 @@ const ExerciseVideos = ({
           }}
         >
           {videosUnavailable
-            ? 'Video API is unavailable for your key right now.'
+            ? 'Video API unavailable. Add and subscribe REACT_APP_YOUTUBE_RAPID_API_KEY if you want videos.'
             : 'No videos found for this exercise.'}
         </Typography>
       </Box>
