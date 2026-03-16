@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 
 import Logo from '../assets/images/Logo.png';
 
-const Navbar = () => {
+const Navbar = ({ isDarkMode, onToggleTheme }) => {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -16,6 +18,11 @@ const Navbar = () => {
         gap: { sm: '123px', xs: '40px' },
         mt: { sm: '32px', xs: '20px' },
         justifyContent: 'none',
+        alignItems: 'center',
+        background: 'var(--surface-color)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '16px',
+        py: '10px',
       }}
       px="20px"
     >
@@ -29,16 +36,17 @@ const Navbar = () => {
       <Stack
         direction="row"
         gap="40px"
-        fontFamily="Alegreya"
-        fontSize="24px"
-        alignItems="flex-end"
+        fontFamily="'Nunito', sans-serif"
+        fontSize={{ lg: '26px', xs: '20px' }}
+        alignItems="center"
       >
         <Link
           to="/"
           style={{
             textDecoration: 'none',
-            color: '#3A1212',
-            borderBottom: currentPath === '/' ? '3px solid #FF2625' : 'none',
+            color: 'var(--text-primary)',
+            borderBottom:
+              currentPath === '/' ? '3px solid var(--accent)' : 'none',
           }}
         >
           Home
@@ -47,12 +55,36 @@ const Navbar = () => {
           to="/bmi"
           style={{
             textDecoration: 'none',
-            color: '#3A1212',
-            borderBottom: currentPath === '/bmi' ? '3px solid #FF2625' : 'none',
+            color: 'var(--text-primary)',
+            borderBottom:
+              currentPath === '/bmi' ? '3px solid var(--accent)' : 'none',
           }}
         >
           BMI Calculator
         </Link>
+        <Button
+          onClick={onToggleTheme}
+          startIcon={
+            isDarkMode ? <LightModeRoundedIcon /> : <DarkModeRoundedIcon />
+          }
+          sx={{
+            minWidth: '165px',
+            px: '18px',
+            py: '10px',
+            borderRadius: '12px',
+            fontSize: { lg: '18px', xs: '16px' },
+            fontWeight: 700,
+            textTransform: 'none',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
+            backgroundColor: 'var(--muted-surface)',
+            '&:hover': {
+              backgroundColor: 'var(--surface-color)',
+            },
+          }}
+        >
+          {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+        </Button>
       </Stack>
     </Stack>
   );

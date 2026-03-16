@@ -37,7 +37,7 @@ const Exercises = ({
 
         if (bodyPart === 'all') {
           exercisesData = await fetchData(
-            'https://exercisedb.p.rapidapi.com/exercises',
+            'https://exercisedb.p.rapidapi.com/exercises?limit=1500',
             exerciseOptions,
           );
           setAllExercises(Array.isArray(exercisesData) ? exercisesData : []);
@@ -79,7 +79,7 @@ const Exercises = ({
   if (loadError) {
     return (
       <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">
-        <Typography variant="h5" textAlign="center">
+        <Typography variant="h5" textAlign="center" color="var(--text-primary)">
           Could not load exercises right now. Please check your API key and try
           again.
         </Typography>
@@ -90,7 +90,7 @@ const Exercises = ({
   if (!currentExercises.length) {
     return (
       <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">
-        <Typography variant="h5" textAlign="center">
+        <Typography variant="h5" textAlign="center" color="var(--text-primary)">
           No exercises found for this filter.
         </Typography>
       </Box>
@@ -102,7 +102,10 @@ const Exercises = ({
       <Typography
         variant="h4"
         fontWeight="bold"
-        sx={{ fontSize: { lg: '44px', xs: '30px' } }}
+        sx={{
+          fontSize: { lg: '48px', xs: '34px' },
+          color: 'var(--text-primary)',
+        }}
         mb="46px"
       >
         Showing Results
@@ -113,8 +116,8 @@ const Exercises = ({
         flexWrap="wrap"
         justifyContent="center"
       >
-        {currentExercises.map((exercise, idx) => (
-          <ExerciseCard key={idx} exercise={exercise} />
+        {currentExercises.map((exercise) => (
+          <ExerciseCard key={exercise.id} exercise={exercise} />
         ))}
       </Stack>
       <Stack sx={{ mt: { lg: '114px', xs: '70px' } }} alignItems="center">

@@ -40,20 +40,24 @@ const ExerciseVideos = ({ exerciseVideos, name, videosUnavailable }) => {
     return (
       <Box sx={{ marginTop: { lg: '203px', xs: '20px' }, p: '20px' }}>
         <Typography
-          sx={{ fontSize: { lg: '44px', xs: '25px' } }}
+          sx={{
+            fontSize: { lg: '48px', xs: '32px' },
+            color: 'var(--text-primary)',
+          }}
           fontWeight={700}
-          color="#000"
           mb="16px"
         >
           Watch{' '}
-          <span style={{ color: '#FF2625', textTransform: 'capitalize' }}>
+          <span style={{ color: 'var(--accent)', textTransform: 'capitalize' }}>
             {name}
           </span>{' '}
           exercise videos
         </Typography>
         <Typography
-          sx={{ fontSize: { lg: '20px', xs: '16px' } }}
-          color="#4F4C4C"
+          sx={{
+            fontSize: { lg: '24px', xs: '18px' },
+            color: 'var(--text-secondary)',
+          }}
         >
           {videosUnavailable
             ? 'Video API is unavailable for your key right now.'
@@ -66,13 +70,15 @@ const ExerciseVideos = ({ exerciseVideos, name, videosUnavailable }) => {
   return (
     <Box sx={{ marginTop: { lg: '203px', xs: '20px' }, p: '20px' }}>
       <Typography
-        sx={{ fontSize: { lg: '44px', xs: '25px' } }}
+        sx={{
+          fontSize: { lg: '48px', xs: '32px' },
+          color: 'var(--text-primary)',
+        }}
         fontWeight={700}
-        color="#000"
         mb="33px"
       >
         Watch{' '}
-        <span style={{ color: '#FF2625', textTransform: 'capitalize' }}>
+        <span style={{ color: 'var(--accent)', textTransform: 'capitalize' }}>
           {name}
         </span>{' '}
         exercise videos
@@ -108,14 +114,17 @@ const ExerciseVideos = ({ exerciseVideos, name, videosUnavailable }) => {
               height="180px"
               style={{ objectFit: 'cover' }}
             />
-            <Box sx={{ p: '10px', backgroundColor: '#fff' }}>
+            <Box sx={{ p: '10px', backgroundColor: 'var(--surface-color)' }}>
               <Typography
-                sx={{ fontSize: { lg: '18px', xs: '16px' }, fontWeight: 600 }}
-                color="#000"
+                sx={{
+                  fontSize: { lg: '20px', xs: '18px' },
+                  fontWeight: 700,
+                  color: 'var(--text-primary)',
+                }}
               >
                 {item.video.title}
               </Typography>
-              <Typography fontSize="14px" color="gray">
+              <Typography fontSize="16px" color="var(--text-secondary)">
                 {item.video.channelName}
               </Typography>
             </Box>

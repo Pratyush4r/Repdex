@@ -6,13 +6,16 @@ import HorizontalScrollbar from './HorizontalScrollbar';
 const SimilarExercises = ({ targetMuscleExercises, equipmentExercises }) => (
   <Box sx={{ mt: { lg: '100px', xs: '0px' } }}>
     <Typography
-      sx={{ fontSize: { lg: '44px', xs: '25px' }, ml: '20px' }}
+      sx={{
+        fontSize: { lg: '50px', xs: '34px' },
+        ml: '20px',
+        color: 'var(--text-primary)',
+      }}
       fontWeight={700}
-      color="#000"
       mb="33px"
     >
       Similar{' '}
-      <span style={{ color: '#FF2625', textTransform: 'capitalize' }}>
+      <span style={{ color: 'var(--accent)', textTransform: 'capitalize' }}>
         Target Muscle
       </span>{' '}
       exercises
@@ -21,21 +24,28 @@ const SimilarExercises = ({ targetMuscleExercises, equipmentExercises }) => (
       {targetMuscleExercises.length !== 0 ? (
         <HorizontalScrollbar data={targetMuscleExercises} />
       ) : (
-        <Typography>No similar target-muscle exercises found.</Typography>
+        <Typography
+          sx={{
+            color: 'var(--text-secondary)',
+            fontSize: { lg: '22px', xs: '18px' },
+          }}
+        >
+          No similar target-muscle exercises found.
+        </Typography>
       )}
     </Stack>
     <Typography
       sx={{
-        fontSize: { lg: '44px', xs: '25px' },
+        fontSize: { lg: '50px', xs: '34px' },
         ml: '20px',
         mt: { lg: '100px', xs: '60px' },
+        color: 'var(--text-primary)',
       }}
       fontWeight={700}
-      color="#000"
       mb="33px"
     >
       Similar{' '}
-      <span style={{ color: '#FF2625', textTransform: 'capitalize' }}>
+      <span style={{ color: 'var(--accent)', textTransform: 'capitalize' }}>
         Equipment
       </span>{' '}
       exercises
@@ -44,7 +54,14 @@ const SimilarExercises = ({ targetMuscleExercises, equipmentExercises }) => (
       {equipmentExercises.length !== 0 ? (
         <HorizontalScrollbar data={equipmentExercises} />
       ) : (
-        <Typography>No similar equipment exercises found.</Typography>
+        <Typography
+          sx={{
+            color: 'var(--text-secondary)',
+            fontSize: { lg: '22px', xs: '18px' },
+          }}
+        >
+          No similar equipment exercises found.
+        </Typography>
       )}
     </Stack>
   </Box>

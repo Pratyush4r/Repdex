@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
@@ -9,16 +9,32 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BmiCalculator from './pages/BmiCalculator';
 
-const App = () => (
-  <Box width="400px" sx={{ width: { xl: '1488px' } }} m="auto">
-    <Navbar />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/exercise/:id" element={<ExerciseDetail />} />
-      <Route path="/bmi" element={<BmiCalculator />} />
-    </Routes>
-    <Footer />
-  </Box>
-);
+const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('fitness-theme');
+    return savedMode === 'dark';
+  });
+
+  useEffect(() => {
+    const theme = isDarkMode ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('fitness-theme', theme);
+  }, [isDarkMode]);
+
+  return (
+    <Box width="400px" sx={{ width: { xl: '1488px' } }} m="auto">
+      <Navbar
+        isDarkMode={isDarkMode}
+        onToggleTheme={() => setIsDarkMode((prev) => !prev)}
+      />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/exercise/:id" element={<ExerciseDetail />} />
+        <Route path="/bmi" element={<BmiCalculator />} />
+      </Routes>
+      <Footer />
+    </Box>
+  );
+};
 
 export default App;

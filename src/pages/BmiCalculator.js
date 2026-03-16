@@ -44,8 +44,25 @@ const BmiCalculator = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: { xs: 6, md: 10 }, mb: 10 }}>
-      <Typography variant="h3" fontWeight="bold" align="center" mb={4} color="#FF2625">
+    <Container
+      maxWidth="sm"
+      sx={{
+        mt: { xs: 6, md: 10 },
+        mb: 10,
+        py: 4,
+        borderRadius: '16px',
+        background: 'var(--surface-color)',
+        border: '1px solid var(--border-color)',
+      }}
+    >
+      <Typography
+        variant="h3"
+        fontWeight="bold"
+        align="center"
+        mb={4}
+        color="var(--accent)"
+        sx={{ fontSize: { xs: '36px', md: '48px' } }}
+      >
         BMI Calculator
       </Typography>
 
@@ -54,13 +71,15 @@ const BmiCalculator = () => {
           variant="outlined"
           onClick={toggleUnit}
           sx={{
-            borderColor: '#FF2625',
-            color: '#FF2625',
+            borderColor: 'var(--accent)',
+            color: 'var(--accent)',
             fontWeight: 'bold',
+            fontSize: { xs: '16px', md: '18px' },
+            py: '10px',
             '&:hover': {
-              backgroundColor: '#ffeaea',
-              borderColor: '#e01b1b',
-              color: '#e01b1b',
+              backgroundColor: 'var(--muted-surface)',
+              borderColor: 'var(--accent-strong)',
+              color: 'var(--accent-strong)',
             },
           }}
         >
@@ -76,6 +95,17 @@ const BmiCalculator = () => {
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
           fullWidth
+          sx={{
+            '& .MuiInputBase-input': {
+              color: 'var(--text-primary)',
+              fontSize: { xs: '18px', md: '20px' },
+              py: '14px',
+            },
+            '& .MuiInputLabel-root': {
+              color: 'var(--text-secondary)',
+              fontSize: { xs: '16px', md: '18px' },
+            },
+          }}
         />
 
         <TextField
@@ -85,6 +115,17 @@ const BmiCalculator = () => {
           value={height}
           onChange={(e) => setHeight(e.target.value)}
           fullWidth
+          sx={{
+            '& .MuiInputBase-input': {
+              color: 'var(--text-primary)',
+              fontSize: { xs: '18px', md: '20px' },
+              py: '14px',
+            },
+            '& .MuiInputLabel-root': {
+              color: 'var(--text-secondary)',
+              fontSize: { xs: '16px', md: '18px' },
+            },
+          }}
         />
 
         <Box display="flex" gap={2}>
@@ -92,13 +133,13 @@ const BmiCalculator = () => {
             variant="contained"
             fullWidth
             sx={{
-              backgroundColor: '#FF2625',
+              backgroundColor: 'var(--accent)',
               color: '#fff',
               fontWeight: 'bold',
-              fontSize: '18px',
-              py: '10px',
+              fontSize: { xs: '18px', md: '20px' },
+              py: '12px',
               '&:hover': {
-                backgroundColor: '#e01b1b',
+                backgroundColor: 'var(--accent-strong)',
               },
             }}
             onClick={calculateBMI}
@@ -110,14 +151,14 @@ const BmiCalculator = () => {
             variant="outlined"
             fullWidth
             sx={{
-              color: '#FF2625',
-              borderColor: '#FF2625',
+              color: 'var(--accent)',
+              borderColor: 'var(--accent)',
               fontWeight: 'bold',
-              fontSize: '18px',
-              py: '10px',
+              fontSize: { xs: '18px', md: '20px' },
+              py: '12px',
               '&:hover': {
-                borderColor: '#e01b1b',
-                color: '#e01b1b',
+                borderColor: 'var(--accent-strong)',
+                color: 'var(--accent-strong)',
               },
             }}
             onClick={resetForm}
@@ -128,10 +169,20 @@ const BmiCalculator = () => {
 
         {bmi && (
           <Box mt={4} textAlign="center">
-            <Typography variant="h4" fontWeight="bold" color="#3A1212" gutterBottom>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              color="var(--text-primary)"
+              gutterBottom
+              sx={{ fontSize: { xs: '30px', md: '36px' } }}
+            >
               Your BMI: {bmi}
             </Typography>
-            <Typography variant="h5" color="#757575">
+            <Typography
+              variant="h5"
+              color="var(--text-secondary)"
+              sx={{ fontSize: { xs: '24px', md: '30px' } }}
+            >
               Status: {status}
             </Typography>
           </Box>
