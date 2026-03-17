@@ -64,24 +64,24 @@ const HorizontalScrollbar = ({
   <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
     {bodyParts
       ? (data as string[]).map((item) => (
-        <ItemBox key={item} itemId={item} title={item} m="0 40px">
-          <BodyPart
-            item={item}
-            setBodyPart={setBodyPart}
-            bodyPart={bodyPart}
-          />
-        </ItemBox>
-      ))
+          <ItemBox key={item} itemID={item} title={item} m="0 40px">
+            <BodyPart
+              item={item}
+              setBodyPart={setBodyPart}
+              bodyPart={bodyPart}
+            />
+          </ItemBox>
+        ))
       : (data as ExerciseRecord[]).map((item) => (
-        <ItemBox
-          key={item.id}
-          itemId={String(item.id)}
-          title={String(item.id)}
-          m="0 40px"
-        >
-          <ExerciseCard exercise={item} />
-        </ItemBox>
-      ))}
+          <ItemBox
+            key={item.id}
+            itemID={String(item.id)}
+            title={String(item.id)}
+            m="0 40px"
+          >
+            <ExerciseCard exercise={item} />
+          </ItemBox>
+        ))}
   </ScrollMenu>
 );
 
