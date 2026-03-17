@@ -41,9 +41,8 @@ export const exerciseGifUrl = (id: string | number): string =>
  * Attach a `gifUrl` to a single exercise record if it is missing.
  * The API no longer includes this field, so we derive it from the `id`.
  */
-const withGifUrl = (exercise: ExerciseRecord): ExerciseRecord => (
-  exercise.gifUrl ? exercise : { ...exercise, gifUrl: exerciseGifUrl(exercise.id) }
-);
+const withGifUrl = (exercise: ExerciseRecord): ExerciseRecord =>
+  exercise.gifUrl ? exercise : { ...exercise, gifUrl: exerciseGifUrl(exercise.id) };
 
 /**
  * Normalise an API payload so every exercise record contains a `gifUrl`.
@@ -51,11 +50,11 @@ const withGifUrl = (exercise: ExerciseRecord): ExerciseRecord => (
  */
 const normaliseExercisePayload = (data: unknown): unknown => {
   if (Array.isArray(data)) {
-    return data.map((item: unknown) => (
+    return data.map((item: unknown) =>
       item && typeof item === 'object' && 'id' in item
         ? withGifUrl(item as ExerciseRecord)
         : item
-    ));
+    );
   }
   if (data && typeof data === 'object' && 'id' in data) {
     return withGifUrl(data as unknown as ExerciseRecord);
