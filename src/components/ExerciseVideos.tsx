@@ -34,7 +34,7 @@ const ExerciseVideos = ({
   const [scrollOffset, setScrollOffset] = useState(0);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollLeft, scrollWidth, clientWidth } = e.currentTarget;
+    const { scrollLeft } = e.currentTarget;
     setScrollOffset(scrollLeft);
   };
 
@@ -53,9 +53,7 @@ const ExerciseVideos = ({
   };
 
   const canScrollLeft = scrollOffset > 0;
-  const canScrollRight =
-    exerciseVideos.length > 2 &&
-    scrollOffset < 600; // Approximate max scroll
+  const canScrollRight = exerciseVideos.length > 2 && scrollOffset < 600; // Approximate max scroll
 
   if (!exerciseVideos.length) {
     return (
@@ -266,9 +264,7 @@ const ExerciseVideos = ({
           }}
           aria-label="Scroll left"
         >
-          <ArrowBackIosNewRoundedIcon
-            fontSize={{ lg: 'medium', xs: 'small' }}
-          />
+          <ArrowBackIosNewRoundedIcon fontSize="medium" />
         </IconButton>
         <IconButton
           onClick={scrollRight}
@@ -298,9 +294,7 @@ const ExerciseVideos = ({
           }}
           aria-label="Scroll right"
         >
-          <ArrowForwardIosRoundedIcon
-            fontSize={{ lg: 'medium', xs: 'small' }}
-          />
+          <ArrowForwardIosRoundedIcon fontSize="medium" />
         </IconButton>
       </Box>
     </Box>

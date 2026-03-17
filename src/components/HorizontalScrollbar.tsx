@@ -73,12 +73,7 @@ const HorizontalScrollbar = ({
           </ItemBox>
         ))
       : (data as ExerciseRecord[]).map((item) => (
-          <ItemBox
-            key={item.id}
-            itemID={String(item.id)}
-            title={String(item.id)}
-            m="0 40px"
-          >
+          <ItemBox key={item.id} itemID={String(item.id)} title={String(item.id)} m="0 40px">
             <ExerciseCard exercise={item} />
           </ItemBox>
         ))}
