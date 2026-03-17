@@ -11,7 +11,6 @@ type ExerciseVideosProps = {
   videosUnavailable: boolean;
 };
 
-// Import helper functions
 const formatDuration = (seconds?: number): string => {
   if (!seconds) return '';
   const mins = Math.floor(seconds / 60);
@@ -53,7 +52,7 @@ const ExerciseVideos = ({
   };
 
   const canScrollLeft = scrollOffset > 0;
-  const canScrollRight = exerciseVideos.length > 2 && scrollOffset < 600; // Approximate max scroll
+  const canScrollRight = exerciseVideos.length > 2 && scrollOffset < 600;
 
   if (!exerciseVideos.length) {
     return (
@@ -102,11 +101,10 @@ const ExerciseVideos = ({
         </span>{' '}
         exercise videos
       </Typography>
-      <Box sx={{ position: 'relative', width: '100%' }}>
+      <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>
         <Stack
           direction="row"
           sx={{
-            p: 2,
             position: 'relative',
             overflowX: 'auto',
             overflowY: 'hidden',
@@ -235,27 +233,30 @@ const ExerciseVideos = ({
             })}
           </Stack>
         </Stack>
-        {/* Navigation arrows */}
+        {/* Navigation arrows - consistent with HorizontalScrollbar position */}
         <IconButton
           onClick={scrollLeft}
           disabled={!canScrollLeft}
+          className="slider-arrow slider-arrow-left"
           sx={{
-            position: 'absolute',
-            left: { lg: '-60px', xs: '-30px' },
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 2,
             width: { lg: '54px', xs: '40px' },
             height: { lg: '54px', xs: '40px' },
             borderRadius: '50%',
-            bgcolor: 'var(--surface-color)',
-            border: '1px solid var(--border-color)',
-            boxShadow: 'var(--shadow-soft)',
+            background: 'linear-gradient(145deg, var(--accent), var(--accent-strong))',
+            border: '1px solid #9b7f4b',
+            boxShadow:
+              '0 7px 18px rgba(198, 161, 96, 0.32), 0 2px 6px rgba(0, 0, 0, 0.2)',
             color: 'var(--accent-text)',
+            position: 'absolute',
+            bottom: '-28px',
+            transform: 'scale(1)',
+            transition: '0.3s all ease-in-out',
             '&:hover': {
-              bgcolor: 'var(--accent)',
+              transform: 'scale(1.08)',
               color: 'var(--accent-text)',
               border: '1px solid #a88952',
+              boxShadow:
+                '0 10px 24px rgba(198, 161, 96, 0.42), 0 3px 8px rgba(0, 0, 0, 0.24)',
             },
             '&:disabled': {
               opacity: 0,
@@ -269,23 +270,26 @@ const ExerciseVideos = ({
         <IconButton
           onClick={scrollRight}
           disabled={!canScrollRight}
+          className="slider-arrow slider-arrow-right"
           sx={{
-            position: 'absolute',
-            right: { lg: '-60px', xs: '-30px' },
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 2,
             width: { lg: '54px', xs: '40px' },
             height: { lg: '54px', xs: '40px' },
             borderRadius: '50%',
-            bgcolor: 'var(--surface-color)',
-            border: '1px solid var(--border-color)',
-            boxShadow: 'var(--shadow-soft)',
+            background: 'linear-gradient(145deg, var(--accent), var(--accent-strong))',
+            border: '1px solid #9b7f4b',
+            boxShadow:
+              '0 7px 18px rgba(198, 161, 96, 0.32), 0 2px 6px rgba(0, 0, 0, 0.2)',
             color: 'var(--accent-text)',
+            position: 'absolute',
+            bottom: '-28px',
+            transform: 'scale(1)',
+            transition: '0.3s all ease-in-out',
             '&:hover': {
-              bgcolor: 'var(--accent)',
+              transform: 'scale(1.08)',
               color: 'var(--accent-text)',
               border: '1px solid #a88952',
+              boxShadow:
+                '0 10px 24px rgba(198, 161, 96, 0.42), 0 3px 8px rgba(0, 0, 0, 0.24)',
             },
             '&:disabled': {
               opacity: 0,
