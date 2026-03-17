@@ -5,15 +5,8 @@
  * across pages and easier to maintain.
  *
  * NOTE: The ExerciseDB API no longer returns `gifUrl` in exercise responses.
- * Images are served via a dedicated streaming endpoint designed for direct
- * use in <img> tags with the API key passed as a query parameter.
- * See: GET /image?exerciseId=<id>&resolution=180&rapidapi-key=<key>
- *
- * Resolution tiers:
- *   BASIC      → 180 only
- *   PRO        → 180, 360
- *   ULTRA/MEGA → 180, 360, 720, 1080
- * We use 180 (available on all tiers including BASIC/free).
+ * Images are hosted on a public CDN at https://v2.exercisedb.io/image/{id}.
+ * This URL is publicly accessible and does not require authentication.
  */
 import type { ExerciseRecord } from '../types';
 
@@ -38,16 +31,11 @@ export const hasApiKey = Boolean(process.env.REACT_APP_RAPID_API_KEY);
 /**
  * Build a direct-use GIF src URL for an exercise.
  *
- * The /image endpoint streams a GIF and is intentionally designed for use as
- * an <img src> value — the API key is passed as a query param so the browser
- * can load it without a separate fetch() call.
- *
- * We use resolution=180 which is available on every subscription tier.
+ * The public CDN at https://v2.exercisedb.io/image/{id} hosts all exercise GIFs.
+ * This URL is publicly accessible and does not require authentication.
  */
-export const exerciseGifUrl = (id: string | number): string => {
-  const apiKey = process.env.REACT_APP_RAPID_API_KEY ?? '';
-  return `/image?exerciseId=${id}&resolution=180&rapidapi-key=${apiKey}`;
-};
+export const exerciseGifUrl = (id: string | number): string =>
+  `https://v2.exercisedb.io/image/${id}`;
 
 /**
  * Attach a `gifUrl` to a single exercise record if it is missing.
