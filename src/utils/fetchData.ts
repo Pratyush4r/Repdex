@@ -5,8 +5,8 @@
  * across pages and easier to maintain.
  *
  * NOTE: The ExerciseDB API no longer returns `gifUrl` in exercise responses.
- * Images are hosted on a public CDN at https://v2.exercisedb.io/image/{id}.
- * This URL is publicly accessible and does not require authentication.
+ * Images are served via the /image endpoint which requires authentication.
+ * To work on both localhost and Netlify, we use a public image proxy.
  */
 import type { ExerciseRecord } from '../types';
 
@@ -29,12 +29,18 @@ export const youtubeOptions = {
 export const hasApiKey = Boolean(process.env.REACT_APP_RAPID_API_KEY);
 
 /**
- * Build a direct-use GIF src URL for an exercise.
+ * Build a proxied GIF src URL for an exercise.
  *
- * The public CDN at https://v2.exercisedb.io/image/{id} hosts all exercise GIFs.
- * This URL is publicly accessible and does not require authentication.
+ * We use images.weserv.nl as a public image proxy that strips CORP headers.
+ * This allows images to load on both localhost and Netlify.
+ * The original image URL includes the API key for authentication.
  */
-export const exerciseGifUrl = (id: string | number): string => `https://v2.exercisedb.io/image/${id}`;
+export const exerciseGifUrl = (id: string | number): string => {
+  const apiKey = process.env.REACT_APP_RAPID_API_KEY ?? '';
+  const originalUrl = `https://exercisedb.p.rapidapi.com/image?exerciseId=${id}&resolution=180&rapidapi-key=${apiKey}`;
+  // Use images.weserv.nl to proxy and strip CORP headers
+  return `https://images.weserv.nl/?url=${encodeURIComponent(originalUrl)}`;
+};
 
 /**
  * Attach a `gifUrl` to a single exercise record if it is missing.
