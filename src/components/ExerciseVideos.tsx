@@ -1,8 +1,6 @@
 /** Module: ExerciseVideos.tsx */
-import React, { useState } from 'react';
-import { Typography, Box, Stack, IconButton } from '@mui/material';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import React from 'react';
+import { Typography, Box, Stack } from '@mui/material';
 import type { YoutubeVideoItem } from '../types';
 
 type ExerciseVideosProps = {
@@ -30,30 +28,6 @@ const ExerciseVideos = ({
   name,
   videosUnavailable,
 }: ExerciseVideosProps) => {
-  const [scrollOffset, setScrollOffset] = useState(0);
-
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollLeft } = e.currentTarget;
-    setScrollOffset(scrollLeft);
-  };
-
-  const scrollLeft = () => {
-    const container = document.querySelector('.video-scroll-container');
-    if (container) {
-      container.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    const container = document.querySelector('.video-scroll-container');
-    if (container) {
-      container.scrollBy({ left: 300, behavior: 'smooth' });
-    }
-  };
-
-  const canScrollLeft = scrollOffset > 0;
-  const canScrollRight = exerciseVideos.length > 2 && scrollOffset < 600;
-
   if (!exerciseVideos.length) {
     return (
       <Box sx={{ mt: { lg: '203px', xs: '20px' }, px: { lg: '20px', xs: '16px' } }}>
@@ -104,15 +78,31 @@ const ExerciseVideos = ({
       <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>
         <Stack
           direction="row"
+          className="video-scroll-container"
           sx={{
-            position: 'relative',
-            overflowX: 'auto',
+            overflowX: 'scroll',
             overflowY: 'hidden',
             scrollBehavior: 'smooth',
-            '&::-webkit-scrollbar': { display: 'none' },
+            paddingBottom: '12px',
+            '&::-webkit-scrollbar': {
+              height: '8px',
+              display: 'block',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: 'rgba(0, 0, 0, 0.1)',
+              borderRadius: '4px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: 'linear-gradient(90deg, var(--accent), var(--accent-strong))',
+              borderRadius: '4px',
+              border: '1px solid #9b7f4b',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              background: 'linear-gradient(90deg, var(--accent-strong), var(--accent))',
+            },
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'var(--accent) rgba(0, 0, 0, 0.1)',
           }}
-          className="video-scroll-container"
-          onScroll={handleScroll}
         >
           <Stack
             direction="row"
@@ -233,73 +223,6 @@ const ExerciseVideos = ({
             })}
           </Stack>
         </Stack>
-        {/* Navigation arrows - consistent with HorizontalScrollbar position */}
-        <IconButton
-          onClick={scrollLeft}
-          disabled={!canScrollLeft}
-          className="slider-arrow slider-arrow-left"
-          sx={{
-            width: { lg: '54px', xs: '40px' },
-            height: { lg: '54px', xs: '40px' },
-            borderRadius: '50%',
-            background: 'linear-gradient(145deg, var(--accent), var(--accent-strong))',
-            border: '1px solid #9b7f4b',
-            boxShadow:
-              '0 7px 18px rgba(198, 161, 96, 0.32), 0 2px 6px rgba(0, 0, 0, 0.2)',
-            color: 'var(--accent-text)',
-            position: 'absolute',
-            bottom: '-28px',
-            transform: 'scale(1)',
-            transition: '0.3s all ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.08)',
-              color: 'var(--accent-text)',
-              border: '1px solid #a88952',
-              boxShadow:
-                '0 10px 24px rgba(198, 161, 96, 0.42), 0 3px 8px rgba(0, 0, 0, 0.24)',
-            },
-            '&:disabled': {
-              opacity: 0,
-              pointerEvents: 'none',
-            },
-          }}
-          aria-label="Scroll left"
-        >
-          <ArrowBackIosNewRoundedIcon fontSize="medium" />
-        </IconButton>
-        <IconButton
-          onClick={scrollRight}
-          disabled={!canScrollRight}
-          className="slider-arrow slider-arrow-right"
-          sx={{
-            width: { lg: '54px', xs: '40px' },
-            height: { lg: '54px', xs: '40px' },
-            borderRadius: '50%',
-            background: 'linear-gradient(145deg, var(--accent), var(--accent-strong))',
-            border: '1px solid #9b7f4b',
-            boxShadow:
-              '0 7px 18px rgba(198, 161, 96, 0.32), 0 2px 6px rgba(0, 0, 0, 0.2)',
-            color: 'var(--accent-text)',
-            position: 'absolute',
-            bottom: '-28px',
-            transform: 'scale(1)',
-            transition: '0.3s all ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.08)',
-              color: 'var(--accent-text)',
-              border: '1px solid #a88952',
-              boxShadow:
-                '0 10px 24px rgba(198, 161, 96, 0.42), 0 3px 8px rgba(0, 0, 0, 0.24)',
-            },
-            '&:disabled': {
-              opacity: 0,
-              pointerEvents: 'none',
-            },
-          }}
-          aria-label="Scroll right"
-        >
-          <ArrowForwardIosRoundedIcon fontSize="medium" />
-        </IconButton>
       </Box>
     </Box>
   );

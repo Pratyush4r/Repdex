@@ -1,9 +1,7 @@
 /** Module: HorizontalScrollbar.tsx */
-import React, { useContext } from 'react';
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
-import { Box, IconButton } from '@mui/material';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import React from 'react';
+import { Box } from '@mui/material';
+import './HorizontalScrollbar.css';
 
 import ExerciseCard from './ExerciseCard';
 import BodyPart from './BodyPart';
@@ -27,44 +25,16 @@ type HorizontalScrollbarProps = BodyPartScrollbarProps | ExerciseScrollbarProps;
 
 const ItemBox = Box as unknown as React.ElementType;
 
-const LeftArrow = () => {
-  const { scrollPrev } = useContext(VisibilityContext);
-
-  return (
-    <IconButton
-      onClick={() => scrollPrev()}
-      className="slider-arrow slider-arrow-left"
-      aria-label="Scroll left"
-    >
-      <ArrowBackIosNewRoundedIcon />
-    </IconButton>
-  );
-};
-
-const RightArrow = () => {
-  const { scrollNext } = useContext(VisibilityContext);
-
-  return (
-    <IconButton
-      onClick={() => scrollNext()}
-      className="slider-arrow slider-arrow-right"
-      aria-label="Scroll right"
-    >
-      <ArrowForwardIosRoundedIcon />
-    </IconButton>
-  );
-};
-
 const HorizontalScrollbar = ({
   data,
   bodyParts = false,
   setBodyPart = () => undefined,
   bodyPart = 'all',
 }: HorizontalScrollbarProps) => (
-  <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+  <Box className="horizontal-scrollbar-container">
     {bodyParts
       ? (data as string[]).map((item) => (
-        <ItemBox key={item} itemID={item} title={item} m="0 40px">
+        <ItemBox key={item} m="0 40px" flexShrink={0}>
           <BodyPart
             item={item}
             setBodyPart={setBodyPart}
@@ -73,11 +43,11 @@ const HorizontalScrollbar = ({
         </ItemBox>
       ))
       : (data as ExerciseRecord[]).map((item) => (
-        <ItemBox key={item.id} itemID={String(item.id)} title={String(item.id)} m="0 40px">
+        <ItemBox key={item.id} m="0 40px" flexShrink={0}>
           <ExerciseCard exercise={item} />
         </ItemBox>
       ))}
-  </ScrollMenu>
+  </Box>
 );
 
 export default HorizontalScrollbar;
