@@ -17,7 +17,7 @@ const SimilarExercises = ({
   <Box sx={{ mt: { lg: '100px', xs: '0px' } }}>
     <Typography
       sx={{
-        fontSize: { lg: '50px', xs: '34px' },
+        fontSize: { lg: '3rem', xs: '2rem' },
         ml: '20px',
         color: 'var(--text-primary)',
       }}
@@ -34,7 +34,7 @@ const SimilarExercises = ({
         <Typography
           sx={{
             color: 'var(--text-secondary)',
-            fontSize: { lg: '22px', xs: '18px' },
+            fontSize: { lg: '1.375rem', xs: '1.125rem' },
           }}
         >
           No similar target-muscle exercises found.
@@ -43,7 +43,7 @@ const SimilarExercises = ({
     </Stack>
     <Typography
       sx={{
-        fontSize: { lg: '50px', xs: '34px' },
+        fontSize: { lg: '3rem', xs: '2rem' },
         ml: '20px',
         mt: { lg: '100px', xs: '60px' },
         color: 'var(--text-primary)',
@@ -61,7 +61,7 @@ const SimilarExercises = ({
         <Typography
           sx={{
             color: 'var(--text-secondary)',
-            fontSize: { lg: '22px', xs: '18px' },
+            fontSize: { lg: '1.375rem', xs: '1.125rem' },
           }}
         >
           No similar equipment exercises found.
