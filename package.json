@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Repdex exercise catalog with timers, BMI calculator, and accessibility controls.",
+  "proxy": "https://exercisedb.p.rapidapi.com",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",

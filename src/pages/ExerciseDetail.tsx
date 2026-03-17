@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 import {
   exerciseOptions,
   fetchData,
-  hasYoutubeApiKey,
+  hasApiKey,
   youtubeOptions,
 } from '../utils/fetchData';
 import Detail from '../components/Detail';
@@ -77,19 +77,20 @@ const ExerciseDetail = () => {
         setLoadError(false);
         setVideosUnavailable(false);
         const exerciseDbUrl = 'https://exercisedb.p.rapidapi.com';
-        const youtubeSearchUrl = 'https://youtube-search-and-download.p.rapidapi.com';
+        const youtubeSearchUrl = 'https://youtube138.p.rapidapi.com';
 
         const exerciseDetailData = await fetchData<ExerciseRecord>(
           `${exerciseDbUrl}/exercises/exercise/${id}`,
           exerciseOptions,
         );
+
         if (!exerciseDetailData?.id) throw new Error('Exercise detail not found');
         setExerciseDetail(exerciseDetailData);
 
         const [videosResult, targetResult, equipmentResult] = await Promise.allSettled([
-          hasYoutubeApiKey
+          hasApiKey
             ? fetchData(
-              `${youtubeSearchUrl}/search?query=${encodeURIComponent(exerciseDetailData.name)} exercise`,
+              `${youtubeSearchUrl}/search/?q=${encodeURIComponent(exerciseDetailData.name)} exercise`,
               youtubeOptions,
             )
             : Promise.resolve({ contents: [] }),
@@ -110,7 +111,7 @@ const ExerciseDetail = () => {
               ? videosPayload.contents
               : [],
           );
-          setVideosUnavailable(!hasYoutubeApiKey);
+          setVideosUnavailable(!hasApiKey);
         } else {
           setExerciseVideos([]);
           setVideosUnavailable(true);

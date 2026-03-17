@@ -43,7 +43,13 @@ const ExerciseCard = ({ exercise }: ExerciseCardProps) => {
       >
         {bookmarked ? <BookmarkRoundedIcon /> : <BookmarkBorderRoundedIcon />}
       </IconButton>
-      <img src={exercise.gifUrl} alt={exercise.name} loading="lazy" />
+      {exercise.gifUrl && (
+        <img
+          src={exercise.gifUrl}
+          alt={exercise.name}
+          loading="lazy"
+        />
+      )}
       <Stack direction="row" spacing={1.2} sx={{ ml: '21px' }}>
         <Box
           sx={{
