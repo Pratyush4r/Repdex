@@ -154,6 +154,15 @@ body[data-theme="dark"][data-contrast="high"] {
   outline-offset: 2px;
 }
 
+/* Apply text scale to all typography elements */
+body {
+  font-size: calc(18px * var(--text-scale));
+}
+
+body * {
+  font-size: inherit !important;
+}
+
 body button,
 body input,
 body select,
@@ -165,7 +174,7 @@ body .MuiFormLabel-root,
 body .MuiTypography-body1,
 body .MuiTypography-body2,
 body .MuiChip-label {
-  font-size: calc(1rem * var(--text-scale));
+  font-size: calc(1rem * var(--text-scale)) !important;
 }
 
 /* UI scale: enlarge controls/layout without page-zoom side effects */
