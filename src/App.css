@@ -154,9 +154,9 @@ body[data-theme="dark"][data-contrast="high"] {
   outline-offset: 2px;
 }
 
-/* Apply text scale to all typography elements */
+/* Apply text scale to all typography elements - must use !important to override MUI inline styles */
 body {
-  font-size: calc(18px * var(--text-scale));
+  font-size: calc(18px * var(--text-scale)) !important;
 }
 
 body * {
@@ -173,7 +173,17 @@ body .MuiInputLabel-root,
 body .MuiFormLabel-root,
 body .MuiTypography-body1,
 body .MuiTypography-body2,
-body .MuiChip-label {
+body .MuiChip-label,
+body .MuiTypography-h1,
+body .MuiTypography-h2,
+body .MuiTypography-h3,
+body .MuiTypography-h4,
+body .MuiTypography-h5,
+body .MuiTypography-h6,
+body .MuiTypography-body1,
+body .MuiTypography-body2,
+body .MuiTypography-caption,
+body .MuiTypography-overline {
   font-size: calc(1rem * var(--text-scale)) !important;
 }
 
